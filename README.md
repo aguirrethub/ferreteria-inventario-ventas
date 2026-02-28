@@ -78,6 +78,22 @@ HTML + CSS + JavaScript (interfaz web)
 
 database/sql para consultas y transacciones
 
+## 🏗 Arquitectura del Sistema
+
+El sistema sigue una arquitectura por capas:
+
+- Domain → Modelos del negocio (Product, Sale, SaleItem)
+- Service → Reglas y lógica empresarial
+- Storage (SQLite) → Persistencia y transacciones
+- Transport (HTTP) → API REST
+- Web UI → Interfaz gráfica HTML/CSS/JS
+
+La venta se ejecuta mediante una transacción SQL que garantiza integridad:
+1. Inserta cabecera
+2. Inserta detalle
+3. Descuenta stock
+4. Commit o rollback
+
 📁 Estructura del proyecto (resumen)
 
 Los nombres pueden variar según tu repo, pero el concepto es este:
