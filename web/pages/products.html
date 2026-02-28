@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Ferretería | Productos</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+
+  <div class="topbar">
+    <div class="brand">Ferretería • Inventario y Ventas</div>
+    <div class="nav">
+      <a id="navProducts" href="/pages/products.html">Productos</a>
+      <a id="navClients" href="/pages/clients.html">Clientes</a>
+      <a id="navSales" href="/pages/sales.html">Ventas</a>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="grid">
+
+      <div class="card">
+        <h1 class="h1">Productos</h1>
+        <p class="muted">Listado en tiempo real desde <span class="badge">/api/products</span></p>
+
+        <div class="kpi">
+          <div class="box">
+            <div class="num" id="kpiProdTotal">-</div>
+            <div class="lbl">Productos</div>
+          </div>
+          <div class="box">
+            <div class="num" id="kpiProdStock">-</div>
+            <div class="lbl">Stock total</div>
+          </div>
+          <div class="box">
+            <div class="num" id="kpiProdValor">-</div>
+            <div class="lbl">Valor aprox. inventario</div>
+          </div>
+        </div>
+
+        <div id="msgProducts" class="msg" style="display:none;"></div>
+
+        <table class="table" style="margin-top:12px;">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Nombre</th>
+              <th>Stock</th>
+              <th>Precio</th>
+            </tr>
+          </thead>
+          <tbody id="productsBody"></tbody>
+        </table>
+
+        <div class="row" style="margin-top:12px;">
+          <button class="btn secondary" onclick="location.reload()">Refrescar</button>
+          <a class="btn secondary" href="/swagger/" style="display:inline-block;">Swagger</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2 class="h1" style="font-size:18px;">Crear producto</h2>
+        <p class="muted">POST a <span class="badge">/api/products</span></p>
+
+        <form id="formCreateProduct">
+          <div class="row">
+            <input id="pNombre" class="input" placeholder="Nombre (ej: Martillo)" />
+          </div>
+          <div class="row" style="margin-top:10px;">
+            <input id="pStock" class="input" type="number" min="0" placeholder="Stock (ej: 20)" />
+          </div>
+          <div class="row" style="margin-top:10px;">
+            <input id="pPrecio" class="input" type="number" min="0" step="0.01" placeholder="Precio (ej: 9.99)" />
+          </div>
+
+          <div class="row" style="margin-top:12px;">
+            <button class="btn" type="submit">Guardar</button>
+          </div>
+
+          <div id="msgCreateProduct" class="msg" style="display:none;"></div>
+        </form>
+
+        <p class="muted" style="margin-top:12px;">
+          Nota: tu backend valida <span class="badge">precio &gt; 0</span> y <span class="badge">stock ≥ 0</span>.
+        </p>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="/app.js"></script>
+</body>
+</html>

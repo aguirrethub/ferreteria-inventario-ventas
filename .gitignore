@@ -1,0 +1,19 @@
+@"
+# Base de datos local
+*.db
+
+# Binarios
+*.exe
+bin/
+dist/
+
+# Logs / temporales
+*.log
+tmp/
+
+# Entorno
+.env
+
+# Editor
+.vscode/
+"@ | Out-File -Encoding utf8 .gitignore

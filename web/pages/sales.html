@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Ferretería | Ventas</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+
+  <div class="topbar">
+    <div class="brand">Ferretería • Inventario y Ventas</div>
+    <div class="nav">
+      <a id="navProducts" href="/pages/products.html">Productos</a>
+      <a id="navClients" href="/pages/clients.html">Clientes</a>
+      <a id="navSales" href="/pages/sales.html">Ventas</a>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="grid">
+
+      <!-- CREAR VENTA -->
+      <div class="card">
+        <h1 class="h1">Crear venta</h1>
+        <p class="muted">POST a <span class="badge">/api/sales</span> (con transacción y descuento de stock)</p>
+
+        <div class="row">
+          <select id="saleClient" class="input"></select>
+        </div>
+
+        <div class="row" style="margin-top:10px;">
+          <select id="saleProduct" class="input"></select>
+        </div>
+
+        <div class="row" style="margin-top:10px;">
+          <input id="saleQty" class="input" type="number" min="1" placeholder="Cantidad (ej: 2)" />
+          <button id="btnAddItem" class="btn secondary" type="button">Agregar</button>
+        </div>
+
+        <div id="msgSale" class="msg" style="display:none;"></div>
+
+        <table class="table" style="margin-top:12px;">
+          <thead>
+            <tr>
+              <th>Producto</th>
+              <th>Cant.</th>
+              <th>Precio</th>
+              <th>Subtotal</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="saleItemsBody"></tbody>
+        </table>
+
+        <div class="row" style="margin-top:12px; justify-content:space-between; align-items:center;">
+          <div>
+            <span class="badge">Total:</span>
+            <strong id="saleTotal" style="margin-left:8px;">$0.00</strong>
+          </div>
+          <div class="row">
+            <button id="btnClearSale" class="btn secondary" type="button">Limpiar</button>
+            <button id="btnConfirmSale" class="btn" type="button">Confirmar venta</button>
+          </div>
+        </div>
+
+        <p class="muted" style="margin-top:12px;">
+          Nota: tu backend exige <span class="badge">precio_unitario &gt; 0</span>. Aquí lo tomamos del producto automáticamente.
+        </p>
+      </div>
+
+      <!-- LISTA VENTAS -->
+      <div class="card">
+        <h2 class="h1" style="font-size:18px;">Ventas registradas</h2>
+        <p class="muted">GET <span class="badge">/api/sales</span> • Detalle: <span class="badge">/api/sales/{id}</span></p>
+
+        <div class="row">
+          <button id="btnReloadSales" class="btn secondary" type="button">Refrescar ventas</button>
+          <button id="btnVentasHoy" class="btn secondary" type="button">Reporte ventas del día</button>
+          <a class="btn secondary" href="/swagger/">Swagger</a>
+        </div>
+
+        <div id="ventasHoyBox" class="msg" style="display:none; margin-top:10px;"></div>
+        <div id="msgSalesList" class="msg" style="display:none;"></div>
+
+        <table class="table" style="margin-top:12px;">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Cliente</th>
+              <th>Fecha</th>
+              <th>Total</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="salesBody"></tbody>
+        </table>
+
+        <div id="saleDetailBox" class="card" style="margin-top:12px; display:none;">
+          <h3 class="h1" style="font-size:16px;">Detalle de venta</h3>
+          <div class="muted" id="saleDetailMeta"></div>
+
+          <table class="table" style="margin-top:10px;">
+            <thead>
+              <tr>
+                <th>Producto ID</th>
+                <th>Cant.</th>
+                <th>Precio</th>
+                <th>Subtotal</th>
+              </tr>
+            </thead>
+            <tbody id="saleDetailItems"></tbody>
+          </table>
+
+          <div class="row" style="margin-top:10px;">
+            <button id="btnCloseDetail" class="btn secondary" type="button">Cerrar</button>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <script src="/app.js"></script>
+</body>
+</html>

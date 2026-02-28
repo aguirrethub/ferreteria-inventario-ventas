@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Ferretería | Clientes</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+
+  <div class="topbar">
+    <div class="brand">Ferretería • Inventario y Ventas</div>
+    <div class="nav">
+      <a id="navProducts" href="/pages/products.html">Productos</a>
+      <a id="navClients" href="/pages/clients.html">Clientes</a>
+      <a id="navSales" href="/pages/sales.html">Ventas</a>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="grid">
+
+      <div class="card">
+        <h1 class="h1">Clientes</h1>
+        <p class="muted">Listado en tiempo real desde <span class="badge">/api/clients</span></p>
+
+        <div id="msgClients" class="msg" style="display:none;"></div>
+
+        <table class="table" style="margin-top:12px;">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Nombre</th>
+              <th>Cédula</th>
+              <th>Email</th>
+            </tr>
+          </thead>
+          <tbody id="clientsBody"></tbody>
+        </table>
+
+        <div class="row" style="margin-top:12px;">
+          <button class="btn secondary" onclick="location.reload()">Refrescar</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2 class="h1" style="font-size:18px;">Crear cliente</h2>
+        <p class="muted">POST a <span class="badge">/api/clients</span></p>
+
+        <form id="formCreateClient">
+          <div class="row">
+            <input id="cNombre" class="input" placeholder="Nombre completo" />
+          </div>
+          <div class="row" style="margin-top:10px;">
+            <input id="cCedula" class="input" placeholder="Cédula" />
+          </div>
+          <div class="row" style="margin-top:10px;">
+            <input id="cEmail" class="input" placeholder="Email" />
+          </div>
+
+          <div class="row" style="margin-top:12px;">
+            <button class="btn" type="submit">Guardar</button>
+          </div>
+
+          <div id="msgCreateClient" class="msg" style="display:none;"></div>
+        </form>
+
+        <p class="muted" style="margin-top:12px;">
+          Nota: tu backend exige <span class="badge">nombre</span>, 
+          <span class="badge">cedula</span> y 
+          <span class="badge">email</span>.
+        </p>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="/app.js"></script>
+</body>
+</html>

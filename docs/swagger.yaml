@@ -1,0 +1,283 @@
+basePath: /api
+definitions:
+  ferreteria-inventario-ventas_internal_domain.Client:
+    properties:
+      cedula:
+        description: Número de cédula (único)
+        type: string
+      email:
+        description: Correo electrónico
+        type: string
+      id:
+        description: Identificador único en la base de datos
+        type: integer
+      nombre:
+        description: Nombre completo del cliente
+        type: string
+    type: object
+  ferreteria-inventario-ventas_internal_domain.Product:
+    properties:
+      id:
+        description: Identificador único en la base de datos
+        type: integer
+      nombre:
+        description: Nombre del producto
+        type: string
+      precio:
+        description: Precio unitario del producto
+        type: number
+      stock:
+        description: Cantidad disponible en inventario
+        type: integer
+    type: object
+  ferreteria-inventario-ventas_internal_domain.Sale:
+    properties:
+      client_id:
+        description: Cliente que realiza la compra
+        type: integer
+      fecha:
+        description: Fecha de la venta
+        type: string
+      id:
+        description: ID de la venta
+        type: integer
+      items:
+        description: Lista de productos vendidos
+        items:
+          $ref: '#/definitions/ferreteria-inventario-ventas_internal_domain.SaleItem'
+        type: array
+      total:
+        description: Total de la venta
+        type: number
+    type: object
+  ferreteria-inventario-ventas_internal_domain.SaleItem:
+    properties:
+      cantidad:
+        description: Cantidad vendida
+        type: integer
+      precio_unitario:
+        description: Precio al momento de la venta
+        type: number
+      product_id:
+        description: ID del producto vendido
+        type: integer
+      subtotal:
+        description: Cantidad * PrecioUnitario
+        type: number
+    type: object
+host: localhost:8080
+info:
+  contact: {}
+  description: API REST para sistema de inventario y ventas de ferretería.
+  title: Ferretería Inventario API
+  version: "1.0"
+paths:
+  /api/products:
+    get:
+      consumes:
+      - application/json
+      description: GET lista productos, POST crea producto
+      parameters:
+      - description: Producto (solo POST)
+        in: body
+        name: product
+        schema:
+          $ref: '#/definitions/ferreteria-inventario-ventas_internal_domain.Product'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/ferreteria-inventario-ventas_internal_domain.Product'
+            type: array
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/ferreteria-inventario-ventas_internal_domain.Product'
+      summary: Listar o crear productos
+      tags:
+      - Products
+    post:
+      consumes:
+      - application/json
+      description: GET lista productos, POST crea producto
+      parameters:
+      - description: Producto (solo POST)
+        in: body
+        name: product
+        schema:
+          $ref: '#/definitions/ferreteria-inventario-ventas_internal_domain.Product'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/ferreteria-inventario-ventas_internal_domain.Product'
+            type: array
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/ferreteria-inventario-ventas_internal_domain.Product'
+      summary: Listar o crear productos
+      tags:
+      - Products
+  /api/report/top-productos:
+    get:
+      description: Devuelve los 5 productos más vendidos
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              additionalProperties: true
+              type: object
+            type: array
+      summary: Top productos vendidos
+      tags:
+      - Report
+  /api/report/ventas-hoy:
+    get:
+      description: Devuelve cantidad de ventas y total del día
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Ventas del día
+      tags:
+      - Report
+  /api/sales:
+    get:
+      consumes:
+      - application/json
+      description: GET lista ventas, POST crea venta
+      parameters:
+      - description: Venta (solo POST)
+        in: body
+        name: sale
+        schema:
+          $ref: '#/definitions/ferreteria-inventario-ventas_internal_domain.Sale'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/ferreteria-inventario-ventas_internal_domain.Sale'
+            type: array
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/ferreteria-inventario-ventas_internal_domain.Sale'
+      summary: Listar o crear ventas
+      tags:
+      - Sales
+    post:
+      consumes:
+      - application/json
+      description: GET lista ventas, POST crea venta
+      parameters:
+      - description: Venta (solo POST)
+        in: body
+        name: sale
+        schema:
+          $ref: '#/definitions/ferreteria-inventario-ventas_internal_domain.Sale'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/ferreteria-inventario-ventas_internal_domain.Sale'
+            type: array
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/ferreteria-inventario-ventas_internal_domain.Sale'
+      summary: Listar o crear ventas
+      tags:
+      - Sales
+  /api/sales/{id}:
+    get:
+      description: Devuelve una venta con sus items
+      parameters:
+      - description: ID de la venta
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/ferreteria-inventario-ventas_internal_domain.Sale'
+      summary: Obtener detalle de venta
+      tags:
+      - Sales
+  /clients:
+    get:
+      consumes:
+      - application/json
+      description: GET lista clientes, POST crea cliente
+      parameters:
+      - description: Cliente (solo POST)
+        in: body
+        name: client
+        schema:
+          $ref: '#/definitions/ferreteria-inventario-ventas_internal_domain.Client'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/ferreteria-inventario-ventas_internal_domain.Client'
+            type: array
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/ferreteria-inventario-ventas_internal_domain.Client'
+      summary: Listar o crear clientes
+      tags:
+      - Clients
+    post:
+      consumes:
+      - application/json
+      description: GET lista clientes, POST crea cliente
+      parameters:
+      - description: Cliente (solo POST)
+        in: body
+        name: client
+        schema:
+          $ref: '#/definitions/ferreteria-inventario-ventas_internal_domain.Client'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/ferreteria-inventario-ventas_internal_domain.Client'
+            type: array
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/ferreteria-inventario-ventas_internal_domain.Client'
+      summary: Listar o crear clientes
+      tags:
+      - Clients
+swagger: "2.0"
